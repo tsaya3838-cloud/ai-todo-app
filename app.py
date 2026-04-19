@@ -1,3 +1,6 @@
+import json
+import os
+
 from flask import Flask, render_template, request, redirect, url_for, abort
 import gspread
 from google.oauth2.service_account import Credentials
@@ -10,8 +13,9 @@ def get_worksheet():
         'https://www.googleapis.com/auth/spreadsheets',
         'https://www.googleapis.com/auth/drive',
     ]
-    credentials = Credentials.from_service_account_file(
-        'credentials.json', scopes=scopes
+    credentials = Credentials.from_service_account_info(
+        json.loads(os.environ.get('GOOGLE_CREDENTIALS_JSON')),
+        scopes=scopes,
     )
     gc = gspread.authorize(credentials)
     sh = gc.open("AI-ToDo-List")
