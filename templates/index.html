@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 AIクリエイター・ブースト・リスト</title>
+    <style>
+        body {
+            font-family: "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            line-height: 1.5;
+            color: #222;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+        .form-section {
+            margin-bottom: 2rem;
+            padding: 1rem 1.25rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background: #f9f9f9;
+        }
+        .form-section label {
+            display: block;
+            font-weight: bold;
+            margin-top: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+        .form-section label:first-of-type {
+            margin-top: 0;
+        }
+        .form-section input[type="text"],
+        .form-section textarea {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            padding: 0.5rem;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+        }
+        .form-section textarea {
+            min-height: 5rem;
+            resize: vertical;
+        }
+        .form-section input[type="date"] {
+            padding: 0.5rem;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+        }
+        .form-section button {
+            margin-top: 1rem;
+            padding: 0.5rem 1.25rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background: #333;
+            color: #fff;
+        }
+        .form-section button:hover {
+            background: #555;
+            border-color: #555;
+        }
+        a.edit-link {
+            font-weight: bold;
+            color: #1a5fb4;
+            text-decoration: none;
+        }
+        a.edit-link:hover {
+            text-decoration: underline;
+        }
+        .table-wrap {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #333;
+        }
+        thead th {
+            font-weight: bold;
+            background: #eee;
+            border: 1px solid #333;
+            padding: 0.5rem 0.75rem;
+            text-align: left;
+        }
+        tbody td {
+            border: 1px solid #666;
+            padding: 0.5rem 0.75rem;
+            vertical-align: top;
+        }
+        tbody tr:nth-child(even) {
+            background: #fafafa;
+        }
+        h2.tasks-heading {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 AIクリエイター・ブースト・リスト</h1>
+
+    <section class="form-section">
+        <form method="post" action="{{ url_for('index') }}">
+            <label for="title">タイトル</label>
+            <input type="text" id="title" name="title" required>
+
+            <label for="content">内容</label>
+            <textarea id="content" name="content" required></textarea>
+
+            <label for="deadline">期日</label>
+            <input type="date" id="deadline" name="deadline" required>
+
+            <button type="submit">登録する</button>
+        </form>
+    </section>
+
+    <h2 class="tasks-heading">現在のタスク</h2>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>タイトル</th>
+                    <th>内容</th>
+                    <th>期日</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                <tr>
+                    <td>{{ task['タイトル'] }}</td>
+                    <td>{{ task['内容'] }}</td>
+                    <td>{{ task['期日'] }}</td>
+                    <td><a class="edit-link" href="{{ url_for('edit', row_index=loop.index) }}">編集</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

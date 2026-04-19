@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>タスクの編集 — 🚀 AIクリエイター・ブースト・リスト</title>
+    <style>
+        body {
+            font-family: "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            line-height: 1.5;
+            color: #222;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+        .form-section {
+            margin-bottom: 2rem;
+            padding: 1rem 1.25rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background: #f9f9f9;
+        }
+        .form-section label {
+            display: block;
+            font-weight: bold;
+            margin-top: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+        .form-section label:first-of-type {
+            margin-top: 0;
+        }
+        .form-section input[type="text"],
+        .form-section textarea {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            padding: 0.5rem;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+        }
+        .form-section textarea {
+            min-height: 5rem;
+            resize: vertical;
+        }
+        .form-section input[type="date"] {
+            padding: 0.5rem;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+        }
+        .form-actions {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: center;
+        }
+        .form-section button[type="submit"] {
+            padding: 0.5rem 1.25rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background: #333;
+            color: #fff;
+        }
+        .form-section button[type="submit"]:hover {
+            background: #555;
+            border-color: #555;
+        }
+        a.btn-cancel {
+            display: inline-block;
+            padding: 0.5rem 1.25rem;
+            font-weight: bold;
+            text-decoration: none;
+            border: 1px solid #666;
+            border-radius: 4px;
+            background: #fff;
+            color: #333;
+        }
+        a.btn-cancel:hover {
+            background: #eee;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 タスクの編集</h1>
+
+    <section class="form-section">
+        <form method="post" action="{{ url_for('edit', row_index=row_index) }}">
+            <label for="title">タイトル</label>
+            <input type="text" id="title" name="title" required
+                   value="{{ task['タイトル'] }}">
+
+            <label for="content">内容</label>
+            <textarea id="content" name="content" required>{{ task['内容'] }}</textarea>
+
+            <label for="deadline">期日</label>
+            <input type="date" id="deadline" name="deadline" required
+                   value="{{ task['期日'] }}">
+
+            <div class="form-actions">
+                <button type="submit">更新する</button>
+                <a class="btn-cancel" href="{{ url_for('index') }}">キャンセル（戻る）</a>
+            </div>
+        </form>
+    </section>
+</body>
+</html>
