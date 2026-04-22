@@ -102,6 +102,27 @@
             text-decoration: line-through;
             background: #f1f1f1;
         }
+        .deadline-cell {
+            white-space: nowrap;
+        }
+        .deadline-alert {
+            display: inline-block;
+            margin-left: 0.5rem;
+            padding: 0.1rem 0.45rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            line-height: 1.3;
+        }
+        .deadline-alert.overdue,
+        .deadline-alert.today {
+            background: #d93025;
+            color: #fff;
+        }
+        .deadline-alert.upcoming {
+            background: #fce8b2;
+            color: #7a4b00;
+        }
         h2.tasks-heading {
             font-size: 1.1rem;
             margin-bottom: 0.5rem;
@@ -152,7 +173,14 @@
                 <tr class="{% if task.get('ステータス', '未完了') == '完了' %}completed-row{% endif %}">
                     <td>{{ task['タイトル'] }}</td>
                     <td>{{ task['内容'] }}</td>
-                    <td>{{ task['期日'] }}</td>
+                    <td class="deadline-cell">
+                        {{ task['期日'] }}
+                        {% if task.get('deadline_alert') %}
+                        <span class="deadline-alert {{ task.get('deadline_alert_level') }}">
+                            {{ task.get('deadline_alert') }}
+                        </span>
+                        {% endif %}
+                    </td>
                     <td>{{ task.get('ステータス', '未完了') }}</td>
                     <td>{{ task.get('カテゴリ', 'その他') }}</td>
                     <td>
