@@ -34,7 +34,8 @@
             margin-top: 0;
         }
         .form-section input[type="text"],
-        .form-section textarea {
+        .form-section textarea,
+        .form-section select {
             width: 100%;
             max-width: 100%;
             box-sizing: border-box;
@@ -121,6 +122,14 @@
             <label for="deadline">期日</label>
             <input type="date" id="deadline" name="deadline" required>
 
+            <label for="category">カテゴリ</label>
+            <select id="category" name="category" required>
+                <option value="仕事">仕事</option>
+                <option value="学習">学習</option>
+                <option value="趣味">趣味</option>
+                <option value="その他" selected>その他</option>
+            </select>
+
             <button type="submit">登録する</button>
         </form>
     </section>
@@ -134,6 +143,7 @@
                     <th>内容</th>
                     <th>期日</th>
                     <th>ステータス</th>
+                    <th>カテゴリ</th>
                     <th>操作</th>
                 </tr>
             </thead>
@@ -144,6 +154,7 @@
                     <td>{{ task['内容'] }}</td>
                     <td>{{ task['期日'] }}</td>
                     <td>{{ task.get('ステータス', '未完了') }}</td>
+                    <td>{{ task.get('カテゴリ', 'その他') }}</td>
                     <td>
                         <a class="edit-link" href="{{ url_for('edit', row_index=loop.index) }}">編集</a>
                         {% if task.get('ステータス', '未完了') != '完了' %}
