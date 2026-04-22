@@ -96,6 +96,11 @@
         tbody tr:nth-child(even) {
             background: #fafafa;
         }
+        tr.completed-row td {
+            color: #777;
+            text-decoration: line-through;
+            background: #f1f1f1;
+        }
         h2.tasks-heading {
             font-size: 1.1rem;
             margin-bottom: 0.5rem;
@@ -128,16 +133,23 @@
                     <th>タイトル</th>
                     <th>内容</th>
                     <th>期日</th>
+                    <th>ステータス</th>
                     <th>操作</th>
                 </tr>
             </thead>
             <tbody>
                 {% for task in tasks %}
-                <tr>
+                <tr class="{% if task.get('ステータス', '未完了') == '完了' %}completed-row{% endif %}">
                     <td>{{ task['タイトル'] }}</td>
                     <td>{{ task['内容'] }}</td>
                     <td>{{ task['期日'] }}</td>
-                    <td><a class="edit-link" href="{{ url_for('edit', row_index=loop.index) }}">編集</a></td>
+                    <td>{{ task.get('ステータス', '未完了') }}</td>
+                    <td>
+                        <a class="edit-link" href="{{ url_for('edit', row_index=loop.index) }}">編集</a>
+                        {% if task.get('ステータス', '未完了') != '完了' %}
+                        | <a class="edit-link" href="{{ url_for('complete', row_index=loop.index) }}">完了</a>
+                        {% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
