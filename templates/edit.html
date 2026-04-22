@@ -34,7 +34,8 @@
             margin-top: 0;
         }
         .form-section input[type="text"],
-        .form-section textarea {
+        .form-section textarea,
+        .form-section select {
             width: 100%;
             max-width: 100%;
             box-sizing: border-box;
@@ -101,6 +102,14 @@
             <label for="deadline">期日</label>
             <input type="date" id="deadline" name="deadline" required
                    value="{{ task['期日'] }}">
+            <label for="category">カテゴリ</label>
+            <select name="category" id="category">
+                <option value="仕事" {% if task.get('カテゴリ', 'その他') == '仕事' %}selected{% endif %}>仕事</option>
+                <option value="学習" {% if task.get('カテゴリ', 'その他') == '学習' %}selected{% endif %}>学習</option>
+                <option value="趣味" {% if task.get('カテゴリ', 'その他') == '趣味' %}selected{% endif %}>趣味</option>
+                <option value="その他" {% if task.get('カテゴリ', 'その他') == 'その他' %}selected{% endif %}>その他</option>
+            </select>
+            <input type="hidden" name="status" value="未完了">
 
             <div class="form-actions">
                 <button type="submit">更新する</button>
