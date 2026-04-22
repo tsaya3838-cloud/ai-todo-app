@@ -30,7 +30,7 @@ def index():
         title = request.form.get('title', '').strip()
         content = request.form.get('content', '').strip()
         deadline = request.form.get('deadline', '').strip()
-        worksheet.append_row([title, content, deadline])
+        worksheet.append_row([title, content, deadline, '未完了'])
         return redirect(url_for('index'))
 
     tasks = worksheet.get_all_records()
@@ -51,13 +51,27 @@ def edit(row_index):
         title = request.form.get('title', '').strip()
         content = request.form.get('content', '').strip()
         deadline = request.form.get('deadline', '').strip()
+        status = request.form.get('status', '未完了').strip() or '未完了'
         worksheet.update_cell(sheet_row, 1, title)
         worksheet.update_cell(sheet_row, 2, content)
         worksheet.update_cell(sheet_row, 3, deadline)
+        worksheet.update_cell(sheet_row, 4, status)
         return redirect(url_for('index'))
 
     task = tasks[row_index - 1]
     return render_template('edit.html', task=task, row_index=row_index)
+
+
+@app.route('/complete/<int:row_index>')
+def complete(row_index):
+    worksheet = get_worksheet()
+    tasks = worksheet.get_all_records()
+    if row_index < 1 or row_index > len(tasks):
+        abort(404)
+
+    sheet_row = row_index + 1
+    worksheet.update_cell(sheet_row, 4, '完了')
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
