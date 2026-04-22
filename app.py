@@ -30,7 +30,8 @@ def index():
         title = request.form.get('title', '').strip()
         content = request.form.get('content', '').strip()
         deadline = request.form.get('deadline', '').strip()
-        worksheet.append_row([title, content, deadline, '未完了'])
+        category = request.form.get('category', 'その他').strip() or 'その他'
+        worksheet.append_row([title, content, deadline, '未完了', category])
         return redirect(url_for('index'))
 
     tasks = worksheet.get_all_records()
@@ -52,10 +53,12 @@ def edit(row_index):
         content = request.form.get('content', '').strip()
         deadline = request.form.get('deadline', '').strip()
         status = request.form.get('status', '未完了').strip() or '未完了'
+        category = request.form.get('category', 'その他').strip() or 'その他'
         worksheet.update_cell(sheet_row, 1, title)
         worksheet.update_cell(sheet_row, 2, content)
         worksheet.update_cell(sheet_row, 3, deadline)
         worksheet.update_cell(sheet_row, 4, status)
+        worksheet.update_cell(sheet_row, 5, category)
         return redirect(url_for('index'))
 
     task = tasks[row_index - 1]
